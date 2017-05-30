@@ -70,5 +70,31 @@ describe('Vue Unit Helper', function () {
 
     // ASSERT
     expect(vm.myComputedProp).to.equal('Computed prop has changed');
-  })
+  });
+
+  it('should return updated computed property when data is changed', function () {
+    // ARRANGE
+    var input = {
+      name: 'MyComponent',
+      data: function () {
+        return {
+          myDataProp: 'myDataVal'
+        };
+      },
+      computed: {
+        myComputedProp: function () {
+          return 'My Data Prop is ' + this.myDataProp;
+        }
+      }
+    };
+    var vm = vueUnitHelper(input);
+    var originalResult = vm.myComputedProp;
+
+    // ACT
+    vm.myDataProp = 'myOtherDataVal';
+
+    // ASSERT
+    expect(originalResult).to.equal('My Data Prop is myDataVal');
+    expect(vm.myComputedProp).to.equal('My Data Prop is myOtherDataVal');
+  });
 });
