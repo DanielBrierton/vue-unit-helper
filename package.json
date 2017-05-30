@@ -4,7 +4,7 @@
   "description": "Helpers for unit testing Vue components",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",
@@ -24,5 +24,9 @@
   "homepage": "https://github.com/DanielBrierton/vue-unit-helper#readme",
   "dependencies": {
     "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "chai": "^4.0.0",
+    "mocha": "^3.4.2"
   }
 }
