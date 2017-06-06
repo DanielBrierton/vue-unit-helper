@@ -17,14 +17,14 @@ module.exports = function (vueDef) {
     obj[fnName] = fnDef;
   });
   obj.$lifecycleMethods = {
-    beforeCreated: vueDef.beforeCreated,
-    created: vueDef.created,
-    beforeMount: vueDef.beforeMount,
-    mounted: vueDef.mounted,
-    beforeUpdate: vueDef.beforeUpdate,
-    updated: vueDef.updated,
-    beforeDestroy: vueDef.beforeDestroy,
-    destroy: vueDef.destroy
+    beforeCreated: vueDef.beforeCreated && vueDef.beforeCreated.bind(obj),
+    created: vueDef.created && vueDef.created.bind(obj),
+    beforeMount: vueDef.beforeMount && vueDef.beforeMount.bind(obj),
+    mounted: vueDef.mounted && vueDef.mounted.bind(obj),
+    beforeUpdate: vueDef.beforeUpdate && vueDef.beforeUpdate.bind(obj),
+    updated: vueDef.updated && vueDef.updated.bind(obj),
+    beforeDestroy: vueDef.beforeDestroy && vueDef.beforeDestroy.bind(obj),
+    destroy: vueDef.destroy && vueDef.destroy.bind(obj)
   };
   return obj;
 };

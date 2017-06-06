@@ -19,14 +19,30 @@ describe('Vue Unit Helper', function () {
       methods: {
       	myMethod: function () {} 
       },
-      beforeCreated: function () {},
-      beforeDestroy: function () {},
-      beforeMount: function () {},
-      beforeUpdate: function () {},
-      created: function () {},
-      destroy: function () {},
-      mounted: function () {},
-      updated: function () {}
+      beforeCreated: function () {
+        return 'beforeCreated ' + this.myDataProp;
+      },
+      beforeDestroy: function () {
+        return 'beforeDestroy ' + this.myDataProp;
+      },
+      beforeMount: function () {
+        return 'beforeMount ' + this.myDataProp;
+      },
+      beforeUpdate: function () {
+        return 'beforeUpdate ' + this.myDataProp;
+      },
+      created: function () {
+        return 'created ' + this.myDataProp;
+      },
+      destroy: function () {
+        return 'destroy ' + this.myDataProp;
+      },
+      mounted: function () {
+        return 'mounted ' + this.myDataProp;
+      },
+      updated: function () {
+        return 'updated ' + this.myDataProp;
+      }
     };
 
     // ACT
@@ -36,16 +52,14 @@ describe('Vue Unit Helper', function () {
     expect(vm.myDataProp).to.equal('myDataVal');
     expect(vm.myComputedProp).to.equal('My Data Prop is myDataVal');
     expect(vm.myMethod).to.equal(input.methods.myMethod);
-    expect(vm.$lifecycleMethods).to.deep.equal({
-      beforeCreated: input.beforeCreated,
-      beforeDestroy: input.beforeDestroy,
-      beforeMount: input.beforeMount,
-      beforeUpdate: input.beforeUpdate,
-      created: input.created,
-      destroy: input.destroy,
-      mounted: input.mounted,
-      updated: input.updated
-    });
+    expect(vm.$lifecycleMethods.beforeCreated()).to.equal('beforeCreated myDataVal');
+    expect(vm.$lifecycleMethods.beforeDestroy()).to.equal('beforeDestroy myDataVal');
+    expect(vm.$lifecycleMethods.beforeMount()).to.equal('beforeMount myDataVal');
+    expect(vm.$lifecycleMethods.beforeUpdate()).to.equal('beforeUpdate myDataVal');
+    expect(vm.$lifecycleMethods.created()).to.equal('created myDataVal');
+    expect(vm.$lifecycleMethods.destroy()).to.equal('destroy myDataVal');
+    expect(vm.$lifecycleMethods.mounted()).to.equal('mounted myDataVal');
+    expect(vm.$lifecycleMethods.updated()).to.equal('updated myDataVal');
   });
 
   it('should allow mocking of a computed property', function () {
