@@ -1,6 +1,6 @@
 {
   "name": "vue-unit-helper",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Helpers for unit testing Vue components",
   "main": "index.js",
   "scripts": {
