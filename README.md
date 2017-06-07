@@ -1,3 +1,7 @@
+[![CircleCI](https://img.shields.io/circleci/project/github/DanielBrierton/vue-unit-helper.svg)](https://circleci.com/gh/DanielBrierton/vue-unit-helper)
+[![npm](https://img.shields.io/npm/v/vue-unit-helper.svg)](https://www.npmjs.com/package/vue-unit-helper)
+[![npm](https://img.shields.io/npm/l/vue-unit-helper.svg)](https://www.npmjs.com/package/vue-unit-helper)
+
 # vue-unit-helper
 A helper function for unit testing Vue components
 
