@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
 module.exports = function (vueDef) {
-  var obj = _.clone(vueDef.data());
+  var obj = typeof vueDef.data === 'function' ? _.clone(vueDef.data()) : {};
   _.each(vueDef.computed, function(fnDef, fnName) {
     Object.defineProperty(obj, fnName, {
       get: function () {

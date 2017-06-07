@@ -111,4 +111,22 @@ describe('Vue Unit Helper', function () {
     expect(originalResult).to.equal('My Data Prop is myDataVal');
     expect(vm.myComputedProp).to.equal('My Data Prop is myOtherDataVal');
   });
+
+  it('should work with components with no data function', function () {
+    // ARRANGE
+    var input = {
+      name: 'MyComponent',
+      props: ['myDataProp'],
+      computed: {
+        myComputedProp: function () {
+          return 'My Data Prop is ' + this.myDataProp;
+        }
+      }
+    };
+    var vm = vueUnitHelper(input);
+    vm.myDataProp = 'myDataVal'
+
+    // ASSERT
+    expect(vm.myComputedProp).to.equal('My Data Prop is myDataVal');
+  });
 });
