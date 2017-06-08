@@ -5,9 +5,10 @@ module.exports = function (vueDef) {
   _.each(vueDef.computed, function(fnDef, fnName) {
     Object.defineProperty(obj, fnName, {
       get: function () {
-        return this.mockedData ? this.mockedData : fnDef.apply(obj);
+        return this.mockedData ? this.mockedData : fnDef.get ? fnDef.get.apply(obj) : fnDef.apply(obj);
       },
       set: function (val) {
+        if (fnDef.set) fnDef.set.apply(obj, [val]);
         this.mockedData = val;
       },
       mockedData: null
@@ -16,6 +17,19 @@ module.exports = function (vueDef) {
   _.each(vueDef.methods, function(fnDef, fnName) {
     obj[fnName] = fnDef;
   });
+  if (vueDef.watch) {
+    obj.$watchers = {};
+    _.each(vueDef.watch, function(fnDef, fnName) {
+      obj.$watchers[fnName] = fnDef.bind(obj);
+    });
+  }
+  if (vueDef.props && vueDef.props.constructor === {}.constructor) {
+    _.each(vueDef.props, function(propDef, propName) {
+      if (propDef.default) {
+        obj[propName] = typeof propDef.default === 'function' ? propDef.default() : propDef.default;
+      }
+    });
+  }
   obj.$lifecycleMethods = {
     beforeCreated: vueDef.beforeCreated && vueDef.beforeCreated.bind(obj),
     created: vueDef.created && vueDef.created.bind(obj),
