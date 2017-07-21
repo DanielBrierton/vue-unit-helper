@@ -20,7 +20,13 @@ module.exports = function (vueDef) {
   if (vueDef.watch) {
     obj.$watchers = {};
     _.each(vueDef.watch, function(fnDef, fnName) {
-      obj.$watchers[fnName] = fnDef.bind(obj);
+      if (fnDef.bind) {
+        obj.$watchers[fnName] = fnDef.bind(obj);
+      } else if (fnDef.handler) {
+        obj.$watchers[fnName] = fnDef.handler.bind(obj);
+      } else {
+        obj.$watchers[fnName] = fnDef;
+      }
     });
   }
   if (vueDef.props && vueDef.props.constructor === {}.constructor) {
@@ -40,5 +46,11 @@ module.exports = function (vueDef) {
     beforeDestroy: vueDef.beforeDestroy && vueDef.beforeDestroy.bind(obj),
     destroy: vueDef.destroy && vueDef.destroy.bind(obj)
   };
+  obj.$nextTick = (fn) => {
+    requestAnimationFrame(fn);
+  };
+  obj.$destroy = () => {};
+  obj.$mount = () => {};
+  obj.$forceUpdate = () => {};
   return obj;
 };
