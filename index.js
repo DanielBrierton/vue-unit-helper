@@ -3,15 +3,15 @@ var _ = require('lodash');
 module.exports = function (vueDef) {
   var obj = typeof vueDef.data === 'function' ? _.clone(vueDef.data()) : {};
   _.each(vueDef.computed, function(fnDef, fnName) {
+    var mockedData;
     Object.defineProperty(obj, fnName, {
       get: function () {
-        return this.mockedData ? this.mockedData : fnDef.get ? fnDef.get.apply(obj) : fnDef.apply(obj);
+        return mockedData ? mockedData : fnDef.get ? fnDef.get.apply(obj) : fnDef.apply(obj);
       },
       set: function (val) {
         if (fnDef.set) fnDef.set.apply(obj, [val]);
-        this.mockedData = val;
-      },
-      mockedData: null
+        mockedData = val;
+      }
     });
   });
   _.each(vueDef.methods, function(fnDef, fnName) {

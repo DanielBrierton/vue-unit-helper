@@ -204,6 +204,31 @@ describe('Vue Unit Helper', function () {
     expect(vm.myComputedProp).to.equal('My Data Prop is myDataVal');
   });
 
+  it('should allow you to mock one computed property in order to test another', function () {
+    // ARRANGE
+    var input = {
+      data: function () {
+        return {
+          firstName: 'Foo',
+          lastName: 'Bar'
+        };
+      },
+      computed: {
+        fullName() {
+          return this.firstName + ' ' + this.lastName;
+        },
+        hello() {
+          return 'Hello ' + this.fullName;
+        }
+      }
+    };
+    var vm = vueUnitHelper(input);
+    vm.fullName = 'John Doe';
+
+    // ASSERT
+    expect(vm.hello).to.equal('Hello John Doe');
+  });
+
   it('should work with components with no data function', function () {
     // ARRANGE
     var input = {
