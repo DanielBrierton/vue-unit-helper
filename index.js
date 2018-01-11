@@ -44,7 +44,7 @@ module.exports = function (vueDef) {
     beforeUpdate: vueDef.beforeUpdate && vueDef.beforeUpdate.bind(obj),
     updated: vueDef.updated && vueDef.updated.bind(obj),
     beforeDestroy: vueDef.beforeDestroy && vueDef.beforeDestroy.bind(obj),
-    destroy: vueDef.destroy && vueDef.destroy.bind(obj)
+    destroyed: vueDef.destroyed && vueDef.destroyed.bind(obj)
   };
   obj.$nextTick = (fn) => {
     requestAnimationFrame(fn);

@@ -35,8 +35,8 @@ describe('Vue Unit Helper', function () {
       created: function () {
         return 'created ' + this.myDataProp;
       },
-      destroy: function () {
-        return 'destroy ' + this.myDataProp;
+      destroyed: function () {
+        return 'destroyed ' + this.myDataProp;
       },
       mounted: function () {
         return 'mounted ' + this.myDataProp;
@@ -58,7 +58,7 @@ describe('Vue Unit Helper', function () {
     expect(vm.$lifecycleMethods.beforeMount()).to.equal('beforeMount myDataVal');
     expect(vm.$lifecycleMethods.beforeUpdate()).to.equal('beforeUpdate myDataVal');
     expect(vm.$lifecycleMethods.created()).to.equal('created myDataVal');
-    expect(vm.$lifecycleMethods.destroy()).to.equal('destroy myDataVal');
+    expect(vm.$lifecycleMethods.destroyed()).to.equal('destroyed myDataVal');
     expect(vm.$lifecycleMethods.mounted()).to.equal('mounted myDataVal');
     expect(vm.$lifecycleMethods.updated()).to.equal('updated myDataVal');
   });
