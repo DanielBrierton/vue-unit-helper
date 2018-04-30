@@ -1,16 +1,22 @@
-var _ = require('lodash');
+var _ = require("lodash");
 
-module.exports = function (vueDef) {
-  var obj = typeof vueDef.data === 'function' ? _.clone(vueDef.data()) : {};
+module.exports = function(vueDef) {
+  var obj = typeof vueDef.data === "function" ? _.clone(vueDef.data()) : {};
   _.each(vueDef.computed, function(fnDef, fnName) {
+    var isDataMocked = false;
     var mockedData;
     Object.defineProperty(obj, fnName, {
-      get: function () {
-        return mockedData ? mockedData : fnDef.get ? fnDef.get.apply(obj) : fnDef.apply(obj);
+      get: function() {
+        return isDataMocked
+          ? mockedData
+          : fnDef.get
+            ? fnDef.get.apply(obj)
+            : fnDef.apply(obj);
       },
-      set: function (val) {
+      set: function(val) {
         if (fnDef.set) fnDef.set.apply(obj, [val]);
         mockedData = val;
+        isDataMocked = true;
       }
     });
   });
@@ -32,7 +38,10 @@ module.exports = function (vueDef) {
   if (vueDef.props && vueDef.props.constructor === {}.constructor) {
     _.each(vueDef.props, function(propDef, propName) {
       if (propDef.default) {
-        obj[propName] = typeof propDef.default === 'function' ? propDef.default() : propDef.default;
+        obj[propName] =
+          typeof propDef.default === "function"
+            ? propDef.default()
+            : propDef.default;
       }
     });
   }
@@ -46,7 +55,7 @@ module.exports = function (vueDef) {
     beforeDestroy: vueDef.beforeDestroy && vueDef.beforeDestroy.bind(obj),
     destroyed: vueDef.destroyed && vueDef.destroyed.bind(obj)
   };
-  obj.$nextTick = (fn) => {
+  obj.$nextTick = fn => {
     requestAnimationFrame(fn);
   };
   obj.$destroy = () => {};
